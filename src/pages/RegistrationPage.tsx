@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react'
 import { Modal } from '../components/Modal'
 import { emptyMember, validateTeam } from '../lib/validation'
 import { registerTeam } from '../lib/teams'
+import { images } from '../lib/assets'
 import type { Grade, MemberInput, TeamInput } from '../types'
 
 const grades: Grade[] = ['Α΄', 'Β΄', 'Γ΄']
@@ -36,7 +37,7 @@ export function RegistrationPage() {
   }
 
   return <div className="shell max-w-3xl py-12 sm:py-16">
-    <header className="grid items-center gap-4 sm:grid-cols-[1fr_150px]"><div><p className="eyebrow">Συμμετοχή</p><h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-800 sm:text-4xl">Δήλωση Ομάδας</h1><p className="mt-4 max-w-2xl leading-relaxed text-slate-600">Συμπληρώστε μία καταχώριση για την ομάδα σας. Κάθε ομάδα μπορεί να έχει έως 4 μέλη.</p></div><img src="/images/safe-printing.webp" alt="Ασφαλής χρήση τρισδιάστατου εκτυπωτή" className="mx-auto hidden w-32 sm:block" loading="lazy" /></header>
+    <header className="grid items-center gap-4 sm:grid-cols-[1fr_150px]"><div><p className="eyebrow">Συμμετοχή</p><h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-800 sm:text-4xl">Δήλωση Ομάδας</h1><p className="mt-4 max-w-2xl leading-relaxed text-slate-600">Συμπληρώστε μία καταχώριση για την ομάδα σας. Κάθε ομάδα μπορεί να έχει έως 4 μέλη.</p></div><img src={images.safePrinting} alt="Ασφαλής χρήση τρισδιάστατου εκτυπωτή" className="mx-auto hidden w-32 sm:block" loading="lazy" /></header>
     {success && <div role="status" className="mt-7 flex gap-3 rounded-2xl border border-grass/30 bg-green-50 p-4 text-green-800"><CheckCircle2 className="shrink-0 text-grass" /><div><p className="font-bold">Η ομάδα καταχωρίστηκε επιτυχώς.</p><p className="mt-1 text-sm">Ευχαριστούμε για τη δήλωσή σας.</p></div></div>}
     {error && <div role="alert" className="mt-7 flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700"><CircleAlert className="shrink-0 text-red-500" /><p>{error}</p></div>}
     <form onSubmit={onSubmit} className="surface mt-7 p-5 sm:p-7">
