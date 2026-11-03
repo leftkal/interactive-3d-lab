@@ -29,7 +29,7 @@ npm run preview
 
    ```bash
    supabase link --project-ref YOUR_PROJECT_REF
-   supabase db push
+   supabase db push --remote
    ```
 
    Εναλλακτικά, εκτελέστε το περιεχόμενο του `supabase/migrations/20261103000000_team_registrations.sql` στον SQL Editor, μία φορά.
