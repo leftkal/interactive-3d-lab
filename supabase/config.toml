@@ -1,0 +1,2 @@
+[functions.register-team]
+verify_jwt = false

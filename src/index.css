@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { @apply border-slate-700; }
+  body { @apply min-h-screen bg-ink font-sans text-slate-100 antialiased; }
+  button, input, select { font: inherit; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { @apply outline-none ring-2 ring-cyan ring-offset-2 ring-offset-ink; }
+}
+
+@layer components {
+  .shell { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .surface { @apply rounded-2xl border border-slate-700/80 bg-panel/80 shadow-lg shadow-slate-950/20 backdrop-blur; }
+  .label { @apply mb-1.5 block text-sm font-medium text-slate-200; }
+  .field { @apply w-full rounded-xl border border-slate-600 bg-slate-950/50 px-3.5 py-2.5 text-slate-100 placeholder:text-slate-500 transition focus:border-cyan; }
+  .button-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50; }
+  .button-secondary { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-2.5 font-medium text-slate-100 transition hover:border-cyan/70 hover:bg-slate-800; }
+}
