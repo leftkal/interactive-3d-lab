@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: { sans: ['Inter', 'Noto Sans', 'system-ui', 'sans-serif'] },
-      colors: { ink: '#071426', panel: '#0c1d35', cyan: '#42d9ff', violet: '#a78bfa' },
-      boxShadow: { glow: '0 0 40px rgba(66, 217, 255, 0.16)' },
+      colors: { ink: '#f8fbff', panel: '#ffffff', cyan: '#159fd3', violet: '#8b5bd6', sunshine: '#ffc928', coral: '#ff8057', grass: '#56be67' },
+      boxShadow: { glow: '0 12px 32px rgba(37, 99, 235, 0.15)', playful: '0 12px 28px rgba(61, 115, 207, 0.12)' },
     },
   },
   plugins: [],

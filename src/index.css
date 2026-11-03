@@ -5,17 +5,18 @@
 @tailwind utilities;
 
 @layer base {
-  * { @apply border-slate-700; }
-  body { @apply min-h-screen bg-ink font-sans text-slate-100 antialiased; }
+  * { @apply border-sky-100; }
+  body { @apply min-h-screen bg-ink font-sans text-slate-800 antialiased; }
   button, input, select { font: inherit; }
-  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { @apply outline-none ring-2 ring-cyan ring-offset-2 ring-offset-ink; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { @apply outline-none ring-2 ring-cyan ring-offset-2 ring-offset-white; }
 }
 
 @layer components {
   .shell { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
-  .surface { @apply rounded-2xl border border-slate-700/80 bg-panel/80 shadow-lg shadow-slate-950/20 backdrop-blur; }
-  .label { @apply mb-1.5 block text-sm font-medium text-slate-200; }
-  .field { @apply w-full rounded-xl border border-slate-600 bg-slate-950/50 px-3.5 py-2.5 text-slate-100 placeholder:text-slate-500 transition focus:border-cyan; }
-  .button-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50; }
-  .button-secondary { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-600 bg-slate-800/60 px-4 py-2.5 font-medium text-slate-100 transition hover:border-cyan/70 hover:bg-slate-800; }
+  .surface { @apply rounded-3xl border border-sky-100 bg-white shadow-playful; }
+  .label { @apply mb-1.5 block text-sm font-semibold text-slate-700; }
+  .field { @apply w-full rounded-xl border border-sky-200 bg-sky-50/50 px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 transition focus:border-cyan focus:bg-white; }
+  .button-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-5 py-3 font-bold text-white shadow-md shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-[#078fc4] disabled:cursor-not-allowed disabled:opacity-50; }
+  .button-secondary { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-violet/20 bg-violet/10 px-4 py-2.5 font-bold text-violet transition hover:-translate-y-0.5 hover:border-violet/40 hover:bg-violet/15; }
+  .eyebrow { @apply inline-flex rounded-full bg-sunshine/25 px-3 py-1 text-sm font-bold text-orange-700; }
 }
