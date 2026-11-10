@@ -18,6 +18,11 @@ export function StlViewer({ src, label }: { src: string; label: string }) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.setClearColor(0xf8fbff, 0)
     renderer.shadowMap.enabled = true
+    // Keep the CSS canvas equal to its container. Without this, Retina screens
+    // lay out the high-DPI drawing buffer at double size and clip its centre.
+    renderer.domElement.style.display = 'block'
+    renderer.domElement.style.width = '100%'
+    renderer.domElement.style.height = '100%'
     element.appendChild(renderer.domElement)
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
