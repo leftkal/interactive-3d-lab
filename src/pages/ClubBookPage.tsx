@@ -1,0 +1,24 @@
+import { ArrowRight, BookOpen, CheckCircle2, Lightbulb, Radio, Sparkles } from 'lucide-react'
+import { useState } from 'react'
+import type { ReactNode } from 'react'
+import { firstLessonWorks } from '../data/firstLesson'
+
+export function ClubBookPage() {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const work = firstLessonWorks[selectedIndex]
+
+  return <div className="shell py-12 sm:py-16">
+    <header className="max-w-3xl"><p className="eyebrow">Βιβλίο Ομίλου</p><h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-800 sm:text-4xl">Κεφάλαιο 01 — Οι πρώτες ιδέες</h1><p className="mt-4 leading-relaxed text-slate-600">Στην πρώτη συνάντηση, κάθε ομάδα απάντησε στο Design Brief: τι θα δημιουργήσει, πώς θα μοιάζει, τι θα ανιχνεύει και πώς θα αντιδρά. Εδώ συγκεντρώνονται οι πρώτες έξι ιδέες του Ομίλου.</p></header>
+
+    <section className="mt-10 overflow-hidden rounded-[2rem] border border-sky-100 bg-white shadow-playful lg:grid lg:grid-cols-[260px_1fr]">
+      <aside className="border-b border-sky-100 bg-sky-50/70 p-4 lg:border-b-0 lg:border-r"><div className="mb-4 flex items-center gap-2 px-2 text-sm font-extrabold uppercase tracking-[0.14em] text-violet"><BookOpen size={17} />Περιεχόμενα</div><div className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible">{firstLessonWorks.map((item, index) => <button key={item.team} onClick={() => setSelectedIndex(index)} className={`min-w-[155px] rounded-xl px-3 py-3 text-left transition lg:min-w-0 ${index === selectedIndex ? 'bg-white text-cyan shadow-sm ring-1 ring-cyan/20' : 'text-slate-600 hover:bg-white/70'}`}><span className="block text-xs font-bold text-slate-400">{String(index + 1).padStart(2, '0')} · Ομάδα</span><span className="mt-0.5 block font-extrabold">{item.team}</span></button>)}</div></aside>
+      <article className="relative p-6 sm:p-9"><span aria-hidden className="absolute right-8 top-7 text-6xl font-black text-cyan/10">{String(selectedIndex + 1).padStart(2, '0')}</span><p className="relative text-sm font-extrabold uppercase tracking-[0.16em] text-violet">Ομάδα {work.team}</p><h2 className="relative mt-3 max-w-xl text-3xl font-extrabold tracking-tight text-slate-800">{work.title}</h2><div className="relative mt-8 grid gap-4 sm:grid-cols-2"><BookField icon={<Sparkles size={18} />} label="Η τρισδιάστατη μορφή" value={work.form} /><BookField icon={<Radio size={18} />} label="Τι θα αντιλαμβάνεται" value={work.senses} /><BookField icon={<Lightbulb size={18} />} label="Πώς θα αντιδρά" value={work.response} /><BookField icon={<CheckCircle2 size={18} />} label="Πώς θα το ελέγξουμε" value={work.check} /></div><div className="relative mt-8 flex items-center gap-2 border-t border-sky-100 pt-5 text-sm font-semibold text-slate-500"><ArrowRight size={16} className="text-cyan" />Ιδέα → σχεδιασμός → πρωτότυπο → δοκιμή</div></article>
+    </section>
+
+    <section className="mt-12"><div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-extrabold text-slate-800">Ο χάρτης του κεφαλαίου</h2><p className="mt-1 text-slate-500">6 υποβολές · Εργασία 1 · Πρώτη συνάντηση</p></div><p className="text-sm font-semibold text-violet">Το βιβλίο θα συμπληρώνεται συνάντηση με συνάντηση.</p></div><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{firstLessonWorks.map((item, index) => <button key={item.team} onClick={() => { setSelectedIndex(index); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="rounded-2xl border border-sky-100 bg-white p-4 text-left transition hover:-translate-y-0.5 hover:border-cyan/40 hover:shadow-playful"><p className="text-xs font-extrabold uppercase tracking-[0.12em] text-cyan">{item.team}</p><p className="mt-2 font-bold leading-snug text-slate-700">{item.title}</p><p className="mt-2 line-clamp-2 text-sm text-slate-500">{item.senses} <span className="text-violet">→</span> {item.response}</p></button>)}</div></section>
+  </div>
+}
+
+function BookField({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
+  return <div className="rounded-2xl border border-sky-100 bg-sky-50/55 p-4"><span className="grid h-8 w-8 place-items-center rounded-xl bg-white text-cyan shadow-sm">{icon}</span><p className="mt-3 text-xs font-extrabold uppercase tracking-[0.12em] text-slate-500">{label}</p><p className="mt-1.5 font-bold leading-relaxed text-slate-700">{value}</p></div>
+}

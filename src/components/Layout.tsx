@@ -11,6 +11,7 @@ export function Layout() {
   const links = <>
     <NavLink to="/" end className={linkClass} onClick={() => setOpen(false)}>Αρχική</NavLink>
     <NavLink to="/club" className={linkClass} onClick={() => setOpen(false)}>Ο Όμιλος</NavLink>
+    <NavLink to="/book" className={linkClass} onClick={() => setOpen(false)}>Βιβλίο Ομίλου</NavLink>
     <NavLink to="/presentations" className={linkClass} onClick={() => setOpen(false)}>Παρουσιάσεις</NavLink>
     <NavLink to="/registration" className={linkClass} onClick={() => setOpen(false)}>Δήλωση Ομάδας</NavLink>
   </>
