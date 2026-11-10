@@ -3,6 +3,7 @@ import { createClient } from 'npm:@supabase/supabase-js@2'
 const projectUrl = Deno.env.get('SUPABASE_URL')!
 const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 const allowedOrigins = (Deno.env.get('ALLOWED_ORIGINS') ?? '').split(',').map((origin) => origin.trim()).filter(Boolean)
+const registrationsOpen = Deno.env.get('REGISTRATION_OPEN') !== 'false'
 const admin = createClient(projectUrl, serviceRoleKey, { auth: { persistSession: false } })
 
 function headers(origin: string) {
@@ -32,6 +33,7 @@ Deno.serve(async (request) => {
   if (!allowedOrigins.includes(origin)) return response('null', { error: 'Η προέλευση του αιτήματος δεν επιτρέπεται.' }, 403)
   if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: headers(origin) })
   if (request.method !== 'POST') return response(origin, { error: 'Η μέθοδος δεν επιτρέπεται.' }, 405)
+  if (!registrationsOpen) return response(origin, { error: 'Οι δηλώσεις ομάδων έχουν ολοκληρωθεί.' }, 403)
   try {
     const input: unknown = await request.json()
     if (!validRequest(input)) return response(origin, { error: 'Τα στοιχεία της ομάδας δεν είναι έγκυρα.' }, 400)

@@ -9,6 +9,7 @@ import type { Grade, MemberInput, TeamInput } from '../types'
 const grades: Grade[] = ['Α΄', 'Β΄', 'Γ΄']
 
 export function RegistrationPage() {
+  const registrationsOpen = import.meta.env.VITE_REGISTRATION_OPEN !== 'false'
   const [form, setForm] = useState<TeamInput>({ name: '', members: [emptyMember()], website: '' })
   const [error, setError] = useState('')
   const [confirm, setConfirm] = useState(false)
@@ -35,6 +36,8 @@ export function RegistrationPage() {
       setConfirm(false); setError(caught instanceof Error ? caught.message : 'Παρουσιάστηκε πρόβλημα στην εγγραφή.')
     } finally { setSubmitting(false) }
   }
+
+  if (!registrationsOpen) return <div className="shell max-w-3xl py-12 sm:py-16"><div className="surface grid items-center gap-6 overflow-hidden p-7 sm:grid-cols-[1fr_200px] sm:p-10"><div><p className="eyebrow">Συμμετοχή</p><h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-800 sm:text-4xl">Οι δηλώσεις ολοκληρώθηκαν</h1><p className="mt-4 max-w-xl leading-relaxed text-slate-600">Η περίοδος δήλωσης ομάδων για τον Όμιλο έχει κλείσει.</p></div><img src={images.teamDesign} alt="Μαθητές και μαθήτριες που συνεργάζονται" className="mx-auto w-44" /></div></div>
 
   return <div className="shell max-w-3xl py-12 sm:py-16">
     <header className="grid items-center gap-4 sm:grid-cols-[1fr_150px]"><div><p className="eyebrow">Συμμετοχή</p><h1 className="mt-3 text-3xl font-extrabold tracking-tight text-slate-800 sm:text-4xl">Δήλωση Ομάδας</h1><p className="mt-4 max-w-2xl leading-relaxed text-slate-600">Συμπληρώστε μία καταχώριση για την ομάδα σας. Κάθε ομάδα μπορεί να έχει έως 4 μέλη.</p></div><img src={images.safePrinting} alt="Ασφαλής χρήση τρισδιάστατου εκτυπωτή" className="mx-auto hidden w-32 sm:block" loading="lazy" /></header>
