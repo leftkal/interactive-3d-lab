@@ -34,11 +34,13 @@ export function StlViewer({ src, label }: { src: string; label: string }) {
     scene.add(fill)
     let mesh: THREE.Mesh | undefined
     let frame = 0
+    let fitCamera: (() => void) | undefined
     const resize = () => {
       const { width, height } = element.getBoundingClientRect()
       renderer.setSize(width, height, false)
       camera.aspect = width / height
       camera.updateProjectionMatrix()
+      fitCamera?.()
     }
     const observer = new ResizeObserver(resize)
     observer.observe(element)
@@ -52,21 +54,26 @@ export function StlViewer({ src, label }: { src: string; label: string }) {
       mesh.castShadow = true
       mesh.rotation.x = -0.38
       scene.add(mesh)
-      // Calculate the camera from the rotated mesh bounds, not from the original STL axes.
-      const bounds = new THREE.Box3().setFromObject(mesh)
-      const center = bounds.getCenter(new THREE.Vector3())
-      const size = bounds.getSize(new THREE.Vector3())
-      const verticalDistance = (size.y / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))
-      const horizontalDistance = (size.x / 2) / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect)
-      const distance = Math.max(verticalDistance, horizontalDistance, size.z) * 1.45
-      camera.position.copy(center).add(new THREE.Vector3(0.85, -1.1, 0.95).normalize().multiplyScalar(distance))
-      camera.near = Math.max(0.01, distance / 100)
-      camera.far = distance * 100
-      camera.updateProjectionMatrix()
-      controls.target.copy(center)
-      controls.minDistance = distance * 0.45
-      controls.maxDistance = distance * 4
-      controls.update()
+      // Frame the actual, rotated mesh from its centre. Re-run on viewport changes.
+      fitCamera = () => {
+        if (!mesh) return
+        const bounds = new THREE.Box3().setFromObject(mesh)
+        const center = bounds.getCenter(new THREE.Vector3())
+        const size = bounds.getSize(new THREE.Vector3())
+        const halfFov = THREE.MathUtils.degToRad(camera.fov / 2)
+        const distanceForHeight = (size.y / 2) / Math.tan(halfFov)
+        const distanceForWidth = (size.x / 2) / (Math.tan(halfFov) * camera.aspect)
+        const distance = Math.max(distanceForHeight, distanceForWidth, size.z) * 1.6
+        camera.position.set(center.x, center.y, center.z + distance)
+        camera.near = Math.max(0.01, distance / 100)
+        camera.far = distance * 100
+        camera.updateProjectionMatrix()
+        controls.target.copy(center)
+        controls.minDistance = distance * 0.4
+        controls.maxDistance = distance * 4
+        controls.update()
+      }
+      fitCamera()
       setStatus('ready')
     }, undefined, () => setStatus('error'))
     const render = () => {
