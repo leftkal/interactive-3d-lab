@@ -18,5 +18,5 @@
   .field { @apply w-full rounded-xl border border-sky-200 bg-sky-50/50 px-3.5 py-2.5 text-slate-800 placeholder:text-slate-400 transition focus:border-cyan focus:bg-white; }
   .button-primary { @apply inline-flex items-center justify-center gap-2 rounded-xl bg-cyan px-5 py-3 font-bold text-white shadow-md shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-[#078fc4] disabled:cursor-not-allowed disabled:opacity-50; }
   .button-secondary { @apply inline-flex items-center justify-center gap-2 rounded-xl border border-violet/20 bg-violet/10 px-4 py-2.5 font-bold text-violet transition hover:-translate-y-0.5 hover:border-violet/40 hover:bg-violet/15; }
-  .eyebrow { @apply inline-flex rounded-full bg-sunshine/25 px-3 py-1 text-sm font-bold text-orange-700; }
+  .eyebrow { @apply inline-flex rounded-full bg-cyan/10 px-3 py-1 text-sm font-bold text-cyan; }
 }

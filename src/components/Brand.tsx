@@ -1,9 +1,9 @@
-import { Box } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { images } from '../lib/assets'
 
 export function Brand() {
   return <Link to="/" className="flex items-center gap-2.5 font-extrabold tracking-tight text-slate-800" aria-label="Interactive 3D Lab — Αρχική">
-    <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-sunshine via-coral to-violet text-white shadow-glow"><Box size={21} strokeWidth={2.5} /></span>
+    <img src={images.logo} alt="Λογότυπο Interactive 3D Lab" className="h-11 w-11 rounded-full object-cover shadow-glow" />
     <span>Interactive <span className="text-cyan">3D</span> Lab</span>
   </Link>
 }
