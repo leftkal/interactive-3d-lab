@@ -1,11 +1,15 @@
-import { ArrowRight, BookOpen, CheckCircle2, Lightbulb, Radio, Sparkles } from 'lucide-react'
+import { ArrowRight, BookOpen, CheckCircle2, Lightbulb, MousePointer2, Radio, Sparkles } from 'lucide-react'
 import { useState } from 'react'
+import { StlViewer } from '../components/StlViewer'
 import type { ReactNode } from 'react'
 import { firstLessonWorks } from '../data/firstLesson'
+import { secondLessonModels } from '../data/secondLesson'
 
 export function ClubBookPage() {
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedModelIndex, setSelectedModelIndex] = useState(0)
   const work = firstLessonWorks[selectedIndex]
+  const model = secondLessonModels[selectedModelIndex]
 
   return <div className="shell py-12 sm:py-16">
     <header className="max-w-3xl"><p className="eyebrow">Βιβλίο Ομίλου</p><h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-800 sm:text-4xl">Κεφάλαιο 01 — Οι πρώτες ιδέες</h1><p className="mt-4 leading-relaxed text-slate-600">Στην πρώτη συνάντηση, κάθε ομάδα απάντησε στο Design Brief: τι θα δημιουργήσει, πώς θα μοιάζει, τι θα ανιχνεύει και πώς θα αντιδρά. Εδώ συγκεντρώνονται οι πρώτες έξι ιδέες του Ομίλου.</p></header>
@@ -16,6 +20,7 @@ export function ClubBookPage() {
     </section>
 
     <section className="mt-12"><div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-extrabold text-slate-800">Ο χάρτης του κεφαλαίου</h2><p className="mt-1 text-slate-500">6 υποβολές · Εργασία 1 · Πρώτη συνάντηση</p></div><p className="text-sm font-semibold text-violet">Το βιβλίο θα συμπληρώνεται συνάντηση με συνάντηση.</p></div><div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{firstLessonWorks.map((item, index) => <button key={item.team} onClick={() => { setSelectedIndex(index); window.scrollTo({ top: 0, behavior: 'smooth' }) }} className="overflow-hidden rounded-2xl border border-sky-100 bg-white text-left transition hover:-translate-y-0.5 hover:border-cyan/40 hover:shadow-playful"><img src={`${import.meta.env.BASE_URL}images/first-lesson/${item.art}`} alt="" className="aspect-[16/7] w-full object-contain bg-slate-50 p-2" /><div className="p-4"><p className="text-xs font-extrabold uppercase tracking-[0.12em] text-cyan">{item.team}</p><p className="mt-2 font-bold leading-snug text-slate-700">{item.title}</p><p className="mt-2 line-clamp-2 text-sm text-slate-500">{item.senses} <span className="text-violet">→</span> {item.response}</p></div></button>)}</div></section>
+    <section className="mt-16 border-t border-sky-100 pt-12"><header className="max-w-3xl"><p className="eyebrow">Κεφάλαιο 02</p><h2 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-800">Οι τρισδιάστατες πινακίδες των ομάδων</h2><p className="mt-4 leading-relaxed text-slate-600">Στη δεύτερη συνάντηση κάθε ομάδα παρέδωσε μία τρισδιάστατη πινακίδα με το όνομά της, βάση και οπή: εικόνα του μοντέλου και αρχείο STL.</p></header><div className="mt-8 grid gap-5 lg:grid-cols-[250px_1fr]"><div className="grid grid-cols-2 gap-3 lg:block lg:space-y-2">{secondLessonModels.map((item, index) => <button key={item.team} onClick={() => setSelectedModelIndex(index)} className={`overflow-hidden rounded-2xl border text-left transition lg:flex lg:items-center lg:gap-3 lg:p-2 ${index === selectedModelIndex ? 'border-cyan bg-cyan/10 shadow-sm' : 'border-sky-100 bg-white hover:border-cyan/40'}`}><img src={`${import.meta.env.BASE_URL}images/second-lesson/${item.preview}`} alt="" className="aspect-[16/7] w-full object-contain bg-slate-50 p-1 lg:h-12 lg:w-20 lg:rounded-xl" /><span className="block px-2 py-2 text-sm font-extrabold text-slate-700 lg:px-0">{item.team}</span></button>)}</div><div className="surface overflow-hidden p-4 sm:p-6"><div className="mb-4 flex flex-wrap items-center justify-between gap-3"><div><p className="text-sm font-extrabold uppercase tracking-[0.14em] text-violet">Ομάδα {model.team}</p><h3 className="mt-1 text-xl font-extrabold text-slate-800">3D πινακίδα ομάδας</h3></div><span className="inline-flex items-center gap-2 rounded-xl bg-cyan/10 px-3 py-2 text-sm font-bold text-cyan"><MousePointer2 size={16} />Διαδραστική προβολή</span></div><div className="grid gap-5 xl:grid-cols-2"><figure className="overflow-hidden rounded-2xl border border-sky-100 bg-slate-50"><img src={`${import.meta.env.BASE_URL}images/second-lesson/${model.preview}`} alt={`Προεπισκόπηση του μοντέλου της ομάδας ${model.team}`} className="aspect-[16/9] h-full w-full object-contain p-3" /><figcaption className="border-t border-sky-100 bg-white px-3 py-2 text-sm font-semibold text-slate-500">Προεπισκόπηση από το Tinkercad</figcaption></figure><StlViewer key={model.model} src={`${import.meta.env.BASE_URL}models/lesson-2/${model.model}`} label={`Πινακίδα ομάδας ${model.team}`} /></div></div></div></section>
   </div>
 }
 
