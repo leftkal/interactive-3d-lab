@@ -47,17 +47,25 @@ export function StlViewer({ src, label }: { src: string; label: string }) {
       geometry.computeVertexNormals()
       geometry.center()
       geometry.computeBoundingBox()
-      const size = geometry.boundingBox?.getSize(new THREE.Vector3()) ?? new THREE.Vector3(50, 50, 10)
-      const largest = Math.max(size.x, size.y, size.z)
       const material = new THREE.MeshStandardMaterial({ color: 0x159fd3, metalness: 0.14, roughness: 0.34 })
       mesh = new THREE.Mesh(geometry, material)
       mesh.castShadow = true
       mesh.rotation.x = -0.38
       scene.add(mesh)
-      camera.position.set(largest * 0.8, -largest * 1.15, largest * 0.95)
-      controls.target.set(0, 0, 0)
-      controls.minDistance = largest * 0.6
-      controls.maxDistance = largest * 5
+      // Calculate the camera from the rotated mesh bounds, not from the original STL axes.
+      const bounds = new THREE.Box3().setFromObject(mesh)
+      const center = bounds.getCenter(new THREE.Vector3())
+      const size = bounds.getSize(new THREE.Vector3())
+      const verticalDistance = (size.y / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))
+      const horizontalDistance = (size.x / 2) / (Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect)
+      const distance = Math.max(verticalDistance, horizontalDistance, size.z) * 1.45
+      camera.position.copy(center).add(new THREE.Vector3(0.85, -1.1, 0.95).normalize().multiplyScalar(distance))
+      camera.near = Math.max(0.01, distance / 100)
+      camera.far = distance * 100
+      camera.updateProjectionMatrix()
+      controls.target.copy(center)
+      controls.minDistance = distance * 0.45
+      controls.maxDistance = distance * 4
       controls.update()
       setStatus('ready')
     }, undefined, () => setStatus('error'))
